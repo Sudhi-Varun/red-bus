@@ -5,7 +5,7 @@ import Seatlist from './seatlist.js';
 function OnHome() {
 
     const show = useStore((state) => state.show);  
-    if(show==='start')
+    if(show === 'start')
         return (
             <>
                 <Form/>

@@ -1,12 +1,85 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.css';
+import { details } from "./global_vars.js";
+import {useStore } from './store.js'
+
+function Passdetails() {
+    return (
+        <>
+            <p><strong>Name: &nbsp;</strong>{details.passenger}</p>
+            <p><strong>From: &nbsp;</strong>{details.from}</p>
+            <p><strong>To: &nbsp;</strong>{details.to}</p>
+            <p><strong>Date of Journey: &nbsp;</strong>{details.doj}</p>
+        </>
+    );
+}
+
+function Selectedseat() {
+    const selectedseat = useStore((state) => state.selectedseat)
+
+    return (
+        <>
+            <strong style={{ color: "darkorange" }}>Selected seat: </strong>
+            <p>{selectedseat}</p>
+            <br/>
+        </>
+    )
+
+}
+
+function Availableseats() {
+    const availableseats = useStore((state) => state.availableseats);
+    const setSelectedseat = useStore((state) => state.setSelectedseat);
+
+    function selectseat(seatprop) {
+        setSelectedseat(seatprop.seat);
+    }
+    
+    return (
+        <>
+            <strong style={{ color: "darkgreen" }}>Available seats: </strong>
+            <br />
+            {availableseats.map((seat) => <p><button onClick={() => selectseat({ seat })}>Select</button> &nbsp;{seat}</p >)
+}
+            
+        </>
+    )
+
+}
+
+function Bookedseats() {
+    const bookedseats = useStore((state) => state.bookedseats);
+
+    return (
+        <>
+            <strong style={{ color: "red" }}>Booked seats: </strong>
+            {bookedseats.map((seat) => <p>&nbsp;{seat} </p>)}
+            <br />
+        </>
+    )
+}
+
 
 function Seatlist() {
     
     return (
         <>
-        <h4>To be implemented</h4>
+            <div className="text-center"><span style={{ color: "red", fontSize: 20, fontWeight: "bold" }}>Red Bus</span><span style={{ fontSize: 20, fontWeight: "bold" }}> Booking!</span></div>
+            <div className="seat_selector" style={{ backgroundColor: "lightgrey", marginLeft: "30%", marginRight: "30%" }}>
+                <div className="text-center" style={{ color: "darkblue" }}><strong>Select your seat here</strong></div>
+                <div style={{ marginLeft: "10px" }}>
+
+                    <Passdetails/>
+                    <Selectedseat/>
+                    <Availableseats/>
+                    <Bookedseats />
+
+                    <br/>
+                </div>
+            </div>
+        
         </>
     );
 }
 export default Seatlist;
+

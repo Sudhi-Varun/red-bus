@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import { useStore } from './store.js';
+import { details } from "./global_vars.js";
 const Form = () => {
 
     const passengerRef = useRef();
@@ -9,11 +10,15 @@ const Form = () => {
     const dojRef = useRef();
 
     const setShow = useStore((state) => state.setShow);
-    
+           
        const handleSubmit = (event) => {
            event.preventDefault();
-           alert(fromRef.current.value);
-           // the above value will be sent to server and wait for response
+
+           details.passenger = passengerRef.current.value;
+           details.from = fromRef.current.value;
+           details.to = toRef.current.value;
+           details.doj = dojRef.current.value;
+           // fetch api will be used here to send data to api          
            setShow('seats');
        }
 
