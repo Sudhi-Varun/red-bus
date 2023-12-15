@@ -8,10 +8,10 @@ export const useStore = create((set) =>(
         selectedseat: "",
         setSelectedseat: (selectedseat) => set({ selectedseat }),
 
-        availableseats: ["Seat 2", "Seat 3", "Seat 8", "Seat 12", "Seat 13", "Seat 15", "Seat 16", "Seat 17", "Seat 18", "Seat 19"],
+        availableseats: ["02", "03", "08", "12", "13", "15", "16", "17", "18", "19"],
         setAvailableseats: (availableseats) => set({ availableseats }),
 
-        bookedseats: ["Seat 1", "Seat 4", "Seat 5", "Seat 6", "Seat 7", "Seat 9", "Seat 10", "Seat 11", "Seat 14", "Seat 20"],
+        bookedseats: ["01", "04", "05", "06", "07", "09", "10", "11", "14", "20"],
         setBookedseats: (bookedseats) => set({ bookedseats })
 
        }

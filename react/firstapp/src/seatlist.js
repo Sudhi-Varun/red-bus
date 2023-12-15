@@ -20,7 +20,7 @@ function Selectedseat() {
     return (
         <>
             <strong style={{ color: "darkorange" }}>Selected seat: </strong>
-            <p>{selectedseat}</p>
+            <p>&nbsp;Seat No. {selectedseat}</p>
             <br/>
         </>
     )
@@ -30,16 +30,27 @@ function Selectedseat() {
 function Availableseats() {
     const availableseats = useStore((state) => state.availableseats);
     const setSelectedseat = useStore((state) => state.setSelectedseat);
-
+    const selectedseat = useStore((state) => state.selectedseat);
+    const setAvailableseats = useStore((state) => state.setAvailableseats);
+    
     function selectseat(seatprop) {
+        let curr_seat = selectedseat;
         setSelectedseat(seatprop.seat);
+        let tmp = [...availableseats];
+        //adding the current selected seat to the available seats
+        if (curr_seat !== "")
+            tmp.push(curr_seat);
+        //remove the new selected seat from available seats
+        tmp.splice(tmp.indexOf(seatprop.seat), 1);
+        tmp.sort();
+        setAvailableseats(tmp);
     }
     
     return (
         <>
             <strong style={{ color: "darkgreen" }}>Available seats: </strong>
             <br />
-            {availableseats.map((seat) => <p><button onClick={() => selectseat({ seat })}>Select</button> &nbsp;{seat}</p >)
+            {availableseats.map((seat) => <p>&nbsp;Seat No. <button onClick={() => selectseat({ seat })}>Select</button> &nbsp;{seat}</p >)
 }
             
         </>
@@ -53,7 +64,7 @@ function Bookedseats() {
     return (
         <>
             <strong style={{ color: "red" }}>Booked seats: </strong>
-            {bookedseats.map((seat) => <p>&nbsp;{seat} </p>)}
+            {bookedseats.map((seat) => <p>&nbsp;Seat No. {seat} </p>)}
             <br />
         </>
     )
