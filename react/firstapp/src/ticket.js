@@ -22,6 +22,7 @@ function Ticket() {
     const bookedseats = useStore((state) => state.bookedseats);
     const setBookedseats = useStore((state) => state.setBookedseats);
     const setSelectedseat = useStore((state) => state.setSelectedseat);
+
         function Again() {
             let tmp = [...bookedseats];
             tmp.push(selectedseat);
