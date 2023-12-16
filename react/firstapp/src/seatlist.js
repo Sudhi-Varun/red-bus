@@ -1,7 +1,26 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import { details } from "./global_vars.js";
-import {useStore } from './store.js'
+import { useStore } from './store.js'
+
+
+function BookButton() {
+    const setShow = useStore((state) => state.setShow);
+    const selectedseat = useStore((state) => state.selectedseat)
+    function BookSeat() {
+        // Selected seat details are sent to server here.
+        setShow('Ticket');
+    }
+
+    if (selectedseat !== '')
+        return (
+            <>
+                <button className="btn btn-primary" onClick={BookSeat}>Book Now!</button>
+            </>
+        );
+    else
+        return (null);
+}
 
 function Passdetails() {
     return (
@@ -20,10 +39,10 @@ function Selectedseat() {
     return (
         <>
             <strong style={{ color: "darkorange" }}>Selected seat: </strong>
-            <p>&nbsp;Seat No. {selectedseat}</p>
-            <br/>
+            <p>&nbsp;Seat No. {selectedseat}&nbsp;&nbsp;<BookButton></BookButton></p>
+            <br />
         </>
-    )
+    );
 
 }
 
@@ -44,6 +63,7 @@ function Availableseats() {
         tmp.splice(tmp.indexOf(seatprop.seat), 1);
         tmp.sort();
         setAvailableseats(tmp);
+        
     }
     
     return (
@@ -51,10 +71,10 @@ function Availableseats() {
             <strong style={{ color: "darkgreen" }}>Available seats: </strong>
             <br />
             {availableseats.map((seat) => <p>&nbsp;Seat No. <button onClick={() => selectseat({ seat })}>Select</button> &nbsp;{seat}</p >)
-}
-            
+            }
+
         </>
-    )
+    );
 
 }
 
@@ -67,7 +87,7 @@ function Bookedseats() {
             {bookedseats.map((seat) => <p>&nbsp;Seat No. {seat} </p>)}
             <br />
         </>
-    )
+    );
 }
 
 
