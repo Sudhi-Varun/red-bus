@@ -10,8 +10,9 @@ function BookButton() {
     function BookSeat() {
         var fetch_url = 'http://localhost:3000/test/' + details.passenger;
         fetch(fetch_url)
-            .then(response => console.log("Server sends back " + response.text.toString));
-        (setShow('Ticket'));
+            .then(response => response.text())
+            .then((response) => { alert(response+', welcome to Red Bus Booking Portal...')});
+        setShow('Ticket');
     }
 
     if (selectedseat !== '')
