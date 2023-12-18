@@ -1,15 +1,17 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import { details } from "./global_vars.js";
-import { useStore } from './store.js'
+import { useStore } from './store.js';
 
 
 function BookButton() {
     const setShow = useStore((state) => state.setShow);
     const selectedseat = useStore((state) => state.selectedseat)
     function BookSeat() {
-        // Selected seat details are sent to server here.
-        setShow('Ticket');
+        var fetch_url = 'http://localhost:3000/test/' + details.passenger;
+        fetch(fetch_url)
+            .then(response => console.log("Server sends back " + response.text.toString))
+        .then(setShow('Ticket'));
     }
 
     if (selectedseat !== '')
@@ -35,6 +37,7 @@ function Passdetails() {
 
 function Selectedseat() {
     const selectedseat = useStore((state) => state.selectedseat)
+    
 
     return (
         <>
@@ -104,7 +107,7 @@ function Seatlist() {
                     <Selectedseat/>
                     <Availableseats/>
                     <Bookedseats />
-
+                    
                     <br/>
                 </div>
             </div>
