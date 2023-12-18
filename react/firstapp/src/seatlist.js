@@ -10,8 +10,8 @@ function BookButton() {
     function BookSeat() {
         var fetch_url = 'http://localhost:3000/test/' + details.passenger;
         fetch(fetch_url)
-            .then(response => console.log("Server sends back " + response.text.toString))
-        .then(setShow('Ticket'));
+            .then(response => console.log("Server sends back " + response.text.toString));
+        (setShow('Ticket'));
     }
 
     if (selectedseat !== '')
