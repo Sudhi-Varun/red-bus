@@ -8,10 +8,26 @@ function BookButton() {
     const setShow = useStore((state) => state.setShow);
     const selectedseat = useStore((state) => state.selectedseat)
     function BookSeat() {
-        var fetch_url = 'http://localhost:3000/test/' + details.passenger;
-        fetch(fetch_url)
-            .then(response => response.text())
-            .then((response) => { alert(response+', welcome to Red Bus Booking Portal...')});
+        var post_url = 'http://localhost:3000/dbinsert/';
+
+        var post_data = {
+            "passenger": details.passenger,
+            "from": details.from,
+            "to": details.to,
+            "doj": details.doj,
+            "seat":selectedseat
+        }
+        post_data = JSON.stringify(post_data);
+
+
+        fetch(post_url, {
+            headers:
+            {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }, method: "POST", body: post_data
+            }).then(res=>res.json()).then(re=>console.log(re));
+             
         setShow('Ticket');
     }
 
