@@ -1,4 +1,4 @@
-﻿namespace MyMicroservice.Models
+﻿namespace pro1.Models
 {
     public class Passenger_details_posted
     {

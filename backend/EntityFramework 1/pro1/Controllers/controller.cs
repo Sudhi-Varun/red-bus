@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyMicroservice.Models;
+using pro1.Models;
 using pro1.Data;
 
 namespace MyMicroservice.Controllers
@@ -18,15 +18,20 @@ namespace MyMicroservice.Controllers
         [Route("dbinsert")]
         [HttpPost]
         
-        public IActionResult Index([FromBody] Passenger_details_posted posted_body) 
+        public async Task<IActionResult> Index([FromBody] Passenger_details_posted posted_body) 
         {
-            Datacontext datacontext = _datacontext;
-
+            
             var id= Guid.NewGuid();
             ToPost post = new ToPost{Id = id, passenger = posted_body.passenger, from = posted_body.from, to = posted_body.to, doj = posted_body.doj, seat = posted_body.seat };
-            datacontext.Add(post);
-            datacontext.SaveChanges();
-            return Json(posted_body);
+           
+            _datacontext.Add(post);
+            await _datacontext.SaveChangesAsync();
+
+            Console.WriteLine(posted_body.ToString());
+
+            Sendresponse res = new Sendresponse { status = "Success", payload = "Nothing for now" };
+
+            return Json(res);
         }
 
             
