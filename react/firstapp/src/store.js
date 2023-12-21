@@ -2,7 +2,7 @@ import create from 'zustand';
 
 export const useStore = create((set) =>(
        {
-        show: 'start',
+        show: 'signin',
         setShow: (show) => set({ show }),
 
         selectedseat: "",
