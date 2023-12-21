@@ -8,6 +8,9 @@ namespace pro1.Data
         {
         }
 
-        public DbSet<ToPost>? PostBook { get; set; }
+        public DbSet<ToPost> PostBook { get; set; }
+        public DbSet<UserData> UserBook { get; set; }
     }
+
+   
 }

@@ -9,4 +9,7 @@
         public string? doj { get; set; }
         public string? seat { get; set; }
     }
+
+
+
 }

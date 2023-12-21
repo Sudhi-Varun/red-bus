@@ -8,7 +8,6 @@ namespace pro1.Controllers
     {
         private readonly Datacontext _datacontext;
 
-
         public PController(Datacontext datacontext)
         {
             _datacontext = datacontext;
@@ -22,12 +21,12 @@ namespace pro1.Controllers
         {
             
             var id= Guid.NewGuid();
-            ToPost post = new ToPost{Id = id, passenger = posted_body.passenger, from = posted_body.from, to = posted_body.to, doj = posted_body.doj, seat = posted_body.seat };
+            ToPost post = new() { Id = id, passenger = posted_body.passenger, from = posted_body.from, to = posted_body.to, doj = posted_body.doj, seat = posted_body.seat };
 
-           
-            await  _datacontext.AddAsync(post);
-            await  _datacontext.SaveChangesAsync();
                        
+            await _datacontext.PostBook.AddAsync(post);
+            await _datacontext.SaveChangesAsync();
+
             Sendresponse res = new Sendresponse { status = "Success", payload = "Nothing for now" };
 
             return Json(res);

@@ -16,8 +16,8 @@ if (app.Environment.IsDevelopment())
 {
     using (var scope = app.Services.CreateScope())
     {
-        //var Datacontext = scope.ServiceProvider.GetRequiredService<Datacontext>();
-        //Datacontext.Database.EnsureCreated();
+        var Datacontext = scope.ServiceProvider.GetRequiredService<Datacontext>();
+        Datacontext.Database.EnsureCreated();
                 
     }
 }
