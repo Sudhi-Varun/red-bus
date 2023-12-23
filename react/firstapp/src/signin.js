@@ -1,6 +1,7 @@
 import React, {useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useState } from 'react';
+import { useStore } from './store.js';
 function Signin() {
 
     const [showsignin, Setsignin] = useState('true');
@@ -16,18 +17,40 @@ function Signin() {
        </>
     );
 }
+ 
+function Sform({ showsignin, Setsignin }) {
 
-function Sform({ showsignin, Setsignin}) {
-        
+    const setShow = useStore((state) => state.setShow);    
     let uidRef = useRef();
     let passRef = useRef();
 
-    const switcher = () => {
+    const switcher = (param) => {
+       console.log(param);
        Setsignin(false);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        var post_url = 'http://localhost:3000/login/';
+
+        let to_send = {
+            UserId: uidRef.current.value,
+            Password: passRef.current.value
+        };
+        to_send = JSON.stringify(to_send);
+
+        fetch(post_url, {
+            headers:
+            {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }, method: "POST", body: to_send
+        }).then(res => res.json()).then(re => {
+            if (re.status === 'Success')
+                setShow('start');
+            else
+                alert('Try again...');
+        });
     }
 
     if (showsignin)
@@ -46,7 +69,7 @@ function Sform({ showsignin, Setsignin}) {
                         <button style={{ color: "white", backgroundColor: "blue" }}>Submit</button>
                     </div>
                     <p>&nbsp;</p>
-                    <div onClick={switcher} role="button" style={{ color: 'darkblue' }}>Create a new user</div>
+                    <div onClick={()=>switcher('Switching to create new user')} role="button" style={{ color: 'darkblue' }}>Create a new user</div>
                     <p>&nbsp;</p>
                 </div>
             </form>);
@@ -60,12 +83,38 @@ function Nform({ showsignin, Setsignin }) {
     let uidRef = useRef();
     let passRef = useRef();
 
-    const switcher = () => {
+    const switcher = (param) => {
+      console.log(param);
       Setsignin(true);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        var post_url = 'http://localhost:3000/newuser/';
+        
+        let to_send = {
+            Name: unameRef.current.value,
+            UserId: uidRef.current.value,
+            Password: passRef.current.value
+        };
+        to_send = JSON.stringify(to_send);
+
+        fetch(post_url, {
+            headers:
+            {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }, method: "POST", body: to_send
+        }).then(res => res.json()).then(re => {
+            if (re.status === 'Success')
+                alert(re.payload);
+            else
+                alert('Try again...');
+        });
+
+
+
     }
 
     if (!showsignin)
@@ -81,13 +130,13 @@ function Nform({ showsignin, Setsignin }) {
                         <label>User ID:</label><br />
                         <input type="text" ref={uidRef}></input><br />
 
-                        <label>Password:</label><br />
+                        <label>Password1:</label><br />
                         <input type="password" ref={passRef}></input><br /><br />
 
                         <button style={{ color: "white", backgroundColor: "blue" }}>Create</button>
                     </div>
                     <p>&nbsp;</p>
-                    <div onClick={switcher} role="button" style={{ color: 'darkblue' }}>Proceed to sign in</div>
+                    <div onClick={() => switcher('switching to sign in')} role="button" style={{ color: 'darkblue' }}>Proceed to sign in</div>
                     <p>&nbsp;</p>
                 </div>
         </form>);
